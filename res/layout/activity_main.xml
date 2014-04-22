@@ -7,56 +7,53 @@
     tools:context="com.example.lab6.MainActivity"
     tools:ignore="MergeRootFrame" >
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
+    <TextView
+        android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:paddingTop="30dp"
-        android:text="                   Word textfield" >
-
-        <requestFocus />
-    </AutoCompleteTextView>
+        android:paddingTop="20dp"
+        android:text="@string/txt" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20dp" >
 
-        <CheckedTextView
-            android:id="@+id/checkedTextView1"
-            android:layout_width="69dp"
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Moves:" />
+            android:layout_weight="0.41"
+            android:paddingLeft="20dp"
+            android:text="@string/mov" />
 
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView2"
-            android:layout_width="76dp"
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:text="123" />
+            android:layout_weight="0.41"
+            android:text="@string/NumOfMov" />
 
-        <CheckedTextView
-            android:id="@+id/checkedTextView2"
-            android:layout_width="62dp"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.38"
-            android:text="           Score:" />
+            android:layout_weight="0.41"
+            android:paddingLeft="20dp"
+            android:text="@string/Scor" />
 
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView3"
-            android:layout_width="74dp"
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:text="123" />
+            android:layout_weight="0.41"
+            android:text="@string/Score" />
     </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
+        android:paddingLeft="30dp"
         android:paddingTop="30dp" >
 
         <TableRow
@@ -68,25 +65,25 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B1" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B2" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B3" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B4" />
         </TableRow>
 
         <TableRow
@@ -98,25 +95,25 @@
                 android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B5" />
 
             <Button
                 android:id="@+id/button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B6" />
 
             <Button
                 android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B7" />
 
             <Button
                 android:id="@+id/button8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B8" />
         </TableRow>
 
         <TableRow
@@ -128,25 +125,25 @@
                 android:id="@+id/button9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B9" />
 
             <Button
                 android:id="@+id/button10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B10" />
 
             <Button
                 android:id="@+id/button11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B11" />
 
             <Button
                 android:id="@+id/button12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B12" />
         </TableRow>
 
         <TableRow
@@ -158,25 +155,25 @@
                 android:id="@+id/button13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B13" />
 
             <Button
                 android:id="@+id/button14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B14" />
 
             <Button
                 android:id="@+id/button15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B15" />
 
             <Button
                 android:id="@+id/button16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B16" />
         </TableRow>
 
         <TableRow
@@ -188,25 +185,25 @@
                 android:id="@+id/Button01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B17" />
 
             <Button
                 android:id="@+id/Button04"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B18" />
 
             <Button
                 android:id="@+id/Button02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B19" />
 
             <Button
                 android:id="@+id/Button03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/B20" />
         </TableRow>
     </TableLayout>
 
@@ -220,14 +217,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Restart" />
+            android:text="@string/Res" />
 
         <Button
             android:id="@+id/button18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text=" Menu " />
+            android:text="@string/menu" />
     </LinearLayout>
 
 </LinearLayout>

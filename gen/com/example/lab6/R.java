@@ -1003,9 +1003,6 @@ containing a value of this type.
         public static final int action_settings=0x7f05005d;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
-        public static final int autoCompleteTextView1=0x7f05003d;
-        public static final int autoCompleteTextView2=0x7f05003f;
-        public static final int autoCompleteTextView3=0x7f050041;
         public static final int beginning=0x7f050011;
         public static final int button1=0x7f050043;
         public static final int button10=0x7f05004e;
@@ -1026,8 +1023,6 @@ containing a value of this type.
         public static final int button8=0x7f05004b;
         public static final int button9=0x7f05004d;
         public static final int checkbox=0x7f05002d;
-        public static final int checkedTextView1=0x7f05003e;
-        public static final int checkedTextView2=0x7f050040;
         public static final int collapseActionView=0x7f05000d;
         public static final int container=0x7f05003c;
         public static final int default_activity_button=0x7f050028;
@@ -1073,6 +1068,11 @@ containing a value of this type.
         public static final int tableRow2=0x7f050047;
         public static final int tableRow3=0x7f05004c;
         public static final int tableRow4=0x7f050051;
+        public static final int textView1=0x7f05003e;
+        public static final int textView2=0x7f050040;
+        public static final int textView3=0x7f05003f;
+        public static final int textView4=0x7f050041;
+        public static final int textView5=0x7f05003d;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
@@ -1135,6 +1135,30 @@ containing a value of this type.
         public static final int main=0x7f0c0000;
     }
     public static final class string {
+        public static final int B1=0x7f0a0017;
+        public static final int B10=0x7f0a0020;
+        public static final int B11=0x7f0a0021;
+        public static final int B12=0x7f0a0022;
+        public static final int B13=0x7f0a0023;
+        public static final int B14=0x7f0a0024;
+        public static final int B15=0x7f0a0025;
+        public static final int B16=0x7f0a0026;
+        public static final int B17=0x7f0a0027;
+        public static final int B18=0x7f0a0028;
+        public static final int B19=0x7f0a0029;
+        public static final int B2=0x7f0a0018;
+        public static final int B20=0x7f0a002a;
+        public static final int B3=0x7f0a0019;
+        public static final int B4=0x7f0a001a;
+        public static final int B5=0x7f0a001b;
+        public static final int B6=0x7f0a001c;
+        public static final int B7=0x7f0a001d;
+        public static final int B8=0x7f0a001e;
+        public static final int B9=0x7f0a001f;
+        public static final int NumOfMov=0x7f0a0012;
+        public static final int Res=0x7f0a0015;
+        public static final int Scor=0x7f0a0013;
+        public static final int Score=0x7f0a0014;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0a0001;
@@ -1178,6 +1202,9 @@ containing a value of this type.
         public static final int action_settings=0x7f0a000f;
         public static final int app_name=0x7f0a000d;
         public static final int hello_world=0x7f0a000e;
+        public static final int menu=0x7f0a0016;
+        public static final int mov=0x7f0a0011;
+        public static final int txt=0x7f0a0010;
     }
     public static final class style {
         /** 

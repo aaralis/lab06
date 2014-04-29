@@ -32,10 +32,10 @@ public class MainActivity extends ActionBarActivity {
 	public static int clickTotal;
 	public static boolean isAcceptingPresses;
 	private String comp[];
-	private CustomButton b11,b12,b13,b21,b22,b23,b31,b32,b33,b41,b42,b43;
+	private CustomButton b11,b12,b13,b21,b22,b23,b31,b32,b33,b41,b42,b43,b51,b52,b53,b61,b62,b63;
 	private CustomButton buttonArray[];
 	private boolean clickableArray[][];
-	private int totalMatchesRequired = 6;
+	private int totalMatchesRequired = 9;
 	private int currentMatches = 0;
 	Context context;
 	Handler handler;
@@ -68,17 +68,28 @@ public class MainActivity extends ActionBarActivity {
 		b41 = (CustomButton) findViewById(R.id.button41);
 		b42 = (CustomButton) findViewById(R.id.button42);
 		b43 = (CustomButton) findViewById(R.id.button43);
+		b51 = (CustomButton) findViewById(R.id.button51);
+		b52 = (CustomButton) findViewById(R.id.button52);
+		b53 = (CustomButton) findViewById(R.id.button53);
+		b61 = (CustomButton) findViewById(R.id.button61);
+		b62 = (CustomButton) findViewById(R.id.button62);
+		b63 = (CustomButton) findViewById(R.id.button63);
+		//This is placeholder text for each button for the purposes of testing
 		b11.setTitle("A"); b12.setTitle("A"); b13.setTitle("B");
 		b21.setTitle("B"); b22.setTitle("C"); b23.setTitle("C");
 		b31.setTitle("D"); b32.setTitle("D"); b33.setTitle("E");
 		b41.setTitle("E"); b42.setTitle("F"); b43.setTitle("F");
+		b51.setTitle("G"); b52.setTitle("G"); b53.setTitle("H");
+		b61.setTitle("H"); b62.setTitle("I"); b63.setTitle("I");
 		comp = new String[2];
 		comp[0] = "";
 		comp[1] = "";
 		clickTotal = 0;
 		isAcceptingPresses = true;
-		buttonArray  = new CustomButton[] {b11,b12,b13,b21,b22,b23,b31,b32,b33,b41,b42,b43};
+		buttonArray  = new CustomButton[] {b11,b12,b13,b21,b22,b23,b31,b32,b33,b41,b42,b43,b51,b52,b53,b61,b62,b63};
 		clickableArray = new boolean[][]{{true, true},{true, true},{true, true},
+										 {true, true},{true, true},{true, true},
+										 {true, true},{true, true},{true, true},
 										 {true, true},{true, true},{true, true},
 										 {true, true},{true, true},{true, true},
 										 {true, true},{true, true},{true, true}
@@ -160,14 +171,8 @@ public class MainActivity extends ActionBarActivity {
 			}
 		}).start();
 		
-		/*
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-		*/
 		
-		//Track status of game
+		//loop that constantly checks if the game has been won
 		new Thread(new Runnable() {
 			Button exit;
 			@Override
@@ -185,8 +190,8 @@ public class MainActivity extends ActionBarActivity {
 						handler.post(new buildDialog());
 						//wait till program exits or restarts
 						while (doRestart == false) {
-							
 						}
+						
 						for (int i = 0; i < buttonArray.length; i++) {
 							buttonArray[i].post(new changeText(i, buttonArray));
 							clickableArray[i][0] = true;
@@ -224,7 +229,7 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	
+	//creates win screen dialog
 	private static class buildDialog implements Runnable {
 		
 		Button exit;
@@ -258,7 +263,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 	}
-	
+	//runnable to update the number of moves tally
 	private static class changeMoves implements Runnable {
 		private final TextView tv;
 		changeMoves(TextView tv) {
@@ -271,7 +276,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 	}
-	
+	//runnable to reset the text of the button
 	private static class changeText implements Runnable {
 		private final int loc;
 		private final CustomButton[] arr;
@@ -286,7 +291,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 	}
-	
+	//toast to show success or failure with selections
 	private static class toast implements Runnable {
 
 		String msg;
@@ -302,7 +307,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 	}
-	
+	//runnable to change the color of the button text
 	private static class changeColor implements Runnable {
 
 		int color;

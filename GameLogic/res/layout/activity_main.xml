@@ -43,7 +43,7 @@
             <TextView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/moves"
+                android:id="@+id/movetotal"
                 android:layout_gravity="bottom"
                 android:textSize="25dip"
                 android:text="0"/>

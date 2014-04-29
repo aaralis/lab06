@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
@@ -38,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
 	Handler handler;
 	static Dialog dialog;
 	private static boolean doRestart;
-	static TextView moves;
+	private TextView moves;
 	private static int movesTotal;
 		
 
@@ -50,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
 		handler = new Handler();
 		dialog = new Dialog(this);
 		doRestart = false;
-		moves = (TextView) findViewById(R.id.moves);
+		moves = (TextView) findViewById(R.id.movetotal);
 		movesTotal = 0;
 		b11 = (CustomButton) findViewById(R.id.button11);
 		b12 = (CustomButton) findViewById(R.id.button12);
@@ -121,6 +122,7 @@ public class MainActivity extends ActionBarActivity {
 						}
 						Log.d("Comp Thread", "Comparing : " + comp[0] + " and " + comp[1]);
 						if (comp[0].equals(comp[1])) {
+							handler.post(new toast("Match Found!", context));
 							clickableArray[firstPressed][1] = false;
 							clickableArray[secondPressed][1] = false;
 							buttonArray[firstPressed].setClickable(false);
@@ -131,6 +133,7 @@ public class MainActivity extends ActionBarActivity {
 							currentMatches++;
 						}
 						else {
+							handler.post(new toast("Try Again", context));
 							buttonArray[firstPressed].post(new changeText(firstPressed, buttonArray));
 							buttonArray[secondPressed].post(new changeText(secondPressed, buttonArray));
 							comp[0] = "";
@@ -142,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
 						}
 						clickTotal = 0;
 						movesTotal++;
-						moves.post(new changeMoves());
+						moves.post(new changeMoves(moves));
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -175,6 +178,7 @@ public class MainActivity extends ActionBarActivity {
 						currentMatches = 0;
 						//Game is over
 						handler.post(new buildDialog());
+						//wait till program exits or restarts
 						while (doRestart == false) {
 							
 						}
@@ -184,6 +188,7 @@ public class MainActivity extends ActionBarActivity {
 							clickableArray[i][1] = true;
 							buttonArray[i].setClickable(true);
 							movesTotal = 0;
+							moves.post(new changeMoves(moves));
 							
 						}
 						
@@ -266,11 +271,14 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	private static class changeMoves implements Runnable {
-
+		private final TextView tv;
+		changeMoves(TextView tv) {
+			this.tv = tv;
+		}
 		
 		@Override
 		public void run() {
-			moves.setText(movesTotal);
+			tv.setText(String.valueOf(movesTotal));
 		}
 		
 	}
@@ -286,6 +294,22 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		public void run() {
 			arr[loc].setText("");
+		}
+		
+	}
+	
+	private static class toast implements Runnable {
+
+		String msg;
+		Context context;
+		toast(String msg, Context context) {
+			this.msg = msg;
+			this.context = context;
+		}
+		
+		@Override
+		public void run() {
+			Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 		}
 		
 	}

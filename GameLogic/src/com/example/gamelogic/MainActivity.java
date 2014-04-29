@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -46,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		context = this;
 		handler = new Handler();
@@ -123,6 +126,8 @@ public class MainActivity extends ActionBarActivity {
 						Log.d("Comp Thread", "Comparing : " + comp[0] + " and " + comp[1]);
 						if (comp[0].equals(comp[1])) {
 							handler.post(new toast("Match Found!", context));
+							buttonArray[firstPressed].post(new changeColor(buttonArray[firstPressed], Color.BLUE));
+							buttonArray[secondPressed].post(new changeColor(buttonArray[secondPressed], Color.BLUE));
 							clickableArray[firstPressed][1] = false;
 							clickableArray[secondPressed][1] = false;
 							buttonArray[firstPressed].setClickable(false);
@@ -219,23 +224,7 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
-	*/
+	
 	private static class buildDialog implements Runnable {
 		
 		Button exit;
@@ -310,6 +299,23 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		public void run() {
 			Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+		}
+		
+	}
+	
+	private static class changeColor implements Runnable {
+
+		int color;
+		Button button;
+		
+		changeColor(Button button, int color) {
+			this.color = color;
+			this.button = button;
+		}
+		
+		@Override
+		public void run() {
+			button.setTextColor(color);
 		}
 		
 	}

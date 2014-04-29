@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button11"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu11" />
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button12"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu12" />
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button13"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu13" />
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button21"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu21" />
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button22"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu22" />
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button23"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu23" />
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button31"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu31" />
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button32"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu32" />
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button33"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu33" />
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button41"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu41" />
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button42"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu42" />
+        <com.example.gamelogic.CustomButton
+            android:id="@+id/button43"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Bu43" />
+        
+        
+    </LinearLayout>
+    
+
+</LinearLayout>

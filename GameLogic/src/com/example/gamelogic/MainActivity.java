@@ -1,5 +1,7 @@
 package com.example.gamelogic;
 
+import java.util.Random;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -43,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
 	private static boolean doRestart;
 	private TextView moves;
 	private static int movesTotal;
+	private String[] tempArray;
 		
 
 	@Override
@@ -75,12 +78,14 @@ public class MainActivity extends ActionBarActivity {
 		b62 = (CustomButton) findViewById(R.id.button62);
 		b63 = (CustomButton) findViewById(R.id.button63);
 		//This is placeholder text for each button for the purposes of testing
+		/*
 		b11.setTitle("A"); b12.setTitle("A"); b13.setTitle("B");
 		b21.setTitle("B"); b22.setTitle("C"); b23.setTitle("C");
 		b31.setTitle("D"); b32.setTitle("D"); b33.setTitle("E");
 		b41.setTitle("E"); b42.setTitle("F"); b43.setTitle("F");
 		b51.setTitle("G"); b52.setTitle("G"); b53.setTitle("H");
 		b61.setTitle("H"); b62.setTitle("I"); b63.setTitle("I");
+		*/
 		comp = new String[2];
 		comp[0] = "";
 		comp[1] = "";
@@ -94,6 +99,9 @@ public class MainActivity extends ActionBarActivity {
 										 {true, true},{true, true},{true, true},
 										 {true, true},{true, true},{true, true}
 										};
+
+		tempArray = new String[] {"A","B","C","D","E","F","G","H","I","A","B","C","D","E","F","G","H","I"};
+		randomize(tempArray, buttonArray);
 		
 		
 		new Thread(new Runnable() {
@@ -191,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
 						//wait till program exits or restarts
 						while (doRestart == false) {
 						}
-						
+
 						for (int i = 0; i < buttonArray.length; i++) {
 							buttonArray[i].post(new changeText(i, buttonArray));
 							clickableArray[i][0] = true;
@@ -199,8 +207,10 @@ public class MainActivity extends ActionBarActivity {
 							buttonArray[i].setClickable(true);
 							movesTotal = 0;
 							moves.post(new changeMoves(moves));
+							buttonArray[i].post(new changeColor(buttonArray[i], Color.BLACK));
 							
 						}
+						randomize(tempArray, buttonArray);
 						
 					}
 				}
@@ -227,6 +237,22 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void randomize(String[] list, CustomButton[] buttonArray) {
+		//code to randomly assign words to buttons
+		//Really inefficient, and would technically have the potential to take a long time to complete
+		//so if anyone has a better algorithm feel free to replace it
+		int j = 0;
+		int r;
+		Random random = new Random();
+		do {
+			r = random.nextInt(buttonArray.length);
+			if (buttonArray[r].getTitle() == null) {
+				buttonArray[r].setTitle(list[j]);
+				j++;
+			}
+		} while (j < buttonArray.length);
 	}
 
 	//creates win screen dialog

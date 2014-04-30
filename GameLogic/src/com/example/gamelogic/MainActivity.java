@@ -158,8 +158,8 @@ public class MainActivity extends ActionBarActivity {
 						}
 						else {
 							handler.post(new toast("Try Again", context));
-							buttonArray[firstPressed].post(new changeText(firstPressed, buttonArray));
-							buttonArray[secondPressed].post(new changeText(secondPressed, buttonArray));
+							buttonArray[firstPressed].post(new clearText(firstPressed, buttonArray));
+							buttonArray[secondPressed].post(new clearText(secondPressed, buttonArray));
 							comp[0] = "";
 							comp[1] = "";
 							buttonArray[firstPressed].setClickable(true);
@@ -201,7 +201,8 @@ public class MainActivity extends ActionBarActivity {
 						}
 
 						for (int i = 0; i < buttonArray.length; i++) {
-							buttonArray[i].post(new changeText(i, buttonArray));
+							buttonArray[i].post(new clearText(i, buttonArray));
+							buttonArray[i].post(new clearTitle(i, buttonArray));
 							clickableArray[i][0] = true;
 							clickableArray[i][1] = true;
 							buttonArray[i].setClickable(true);
@@ -248,7 +249,7 @@ public class MainActivity extends ActionBarActivity {
 		Random random = new Random();
 		do {
 			r = random.nextInt(buttonArray.length);
-			if (buttonArray[r].getTitle() == null) {
+			if (buttonArray[r].getTitle() == null || buttonArray[r].getTitle() == "") {
 				buttonArray[r].setTitle(list[j]);
 				j++;
 			}
@@ -303,10 +304,10 @@ public class MainActivity extends ActionBarActivity {
 		
 	}
 	//runnable to reset the text of the button
-	private static class changeText implements Runnable {
+	private static class clearText implements Runnable {
 		private final int loc;
 		private final CustomButton[] arr;
-		changeText(int loc, CustomButton[] arr) {
+		clearText(int loc, CustomButton[] arr) {
 			this.loc = loc;
 			this.arr = arr;
 		}
@@ -316,6 +317,20 @@ public class MainActivity extends ActionBarActivity {
 			arr[loc].setText("");
 		}
 		
+	}
+	
+	private static class clearTitle implements Runnable {
+		private final int loc;
+		private final CustomButton[] arr;
+		clearTitle(int loc, CustomButton[] arr) {
+			this.loc = loc;
+			this.arr = arr;
+		}
+		
+		@Override
+		public void run() {
+			arr[loc].setTitle("");
+		}
 	}
 	//toast to show success or failure with selections
 	private static class toast implements Runnable {

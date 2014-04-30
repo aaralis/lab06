@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -46,7 +47,12 @@ public class MainActivity extends ActionBarActivity {
 	private TextView moves;
 	private static int movesTotal;
 	private String[] tempArray;
-		
+	long timeStart = 0L;
+	long timeInMillisec = 0L;
+	long timeUpdate = 0L;
+	long timeSwapBuff = 0L;
+	private TextView timeView;	
+	private Handler timeHandle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,24 +65,14 @@ public class MainActivity extends ActionBarActivity {
 		doRestart = false;
 		moves = (TextView) findViewById(R.id.movetotal);
 		movesTotal = 0;
-		b11 = (CustomButton) findViewById(R.id.button11);
-		b12 = (CustomButton) findViewById(R.id.button12);
-		b13 = (CustomButton) findViewById(R.id.button13);
-		b21 = (CustomButton) findViewById(R.id.button21);
-		b22 = (CustomButton) findViewById(R.id.button22);
-		b23 = (CustomButton) findViewById(R.id.button23);
-		b31 = (CustomButton) findViewById(R.id.button31);
-		b32 = (CustomButton) findViewById(R.id.button32);
-		b33 = (CustomButton) findViewById(R.id.button33);
-		b41 = (CustomButton) findViewById(R.id.button41);
-		b42 = (CustomButton) findViewById(R.id.button42);
-		b43 = (CustomButton) findViewById(R.id.button43);
-		b51 = (CustomButton) findViewById(R.id.button51);
-		b52 = (CustomButton) findViewById(R.id.button52);
-		b53 = (CustomButton) findViewById(R.id.button53);
-		b61 = (CustomButton) findViewById(R.id.button61);
-		b62 = (CustomButton) findViewById(R.id.button62);
-		b63 = (CustomButton) findViewById(R.id.button63);
+		timeView = (TextView) findViewById(R.id.timer);
+		timeHandle = new Handler();
+		b11 = (CustomButton) findViewById(R.id.button11); b12 = (CustomButton) findViewById(R.id.button12); b13 = (CustomButton) findViewById(R.id.button13);
+		b21 = (CustomButton) findViewById(R.id.button21); b22 = (CustomButton) findViewById(R.id.button22); b23 = (CustomButton) findViewById(R.id.button23);
+		b31 = (CustomButton) findViewById(R.id.button31); b32 = (CustomButton) findViewById(R.id.button32); b33 = (CustomButton) findViewById(R.id.button33); 
+		b41 = (CustomButton) findViewById(R.id.button41); b42 = (CustomButton) findViewById(R.id.button42); b43 = (CustomButton) findViewById(R.id.button43);
+		b51 = (CustomButton) findViewById(R.id.button51); b52 = (CustomButton) findViewById(R.id.button52); b53 = (CustomButton) findViewById(R.id.button53); 
+		b61 = (CustomButton) findViewById(R.id.button61); b62 = (CustomButton) findViewById(R.id.button62); b63 = (CustomButton) findViewById(R.id.button63);
 		//This is placeholder text for each button for the purposes of testing
 		/*
 		b11.setTitle("A"); b12.setTitle("A"); b13.setTitle("B");
@@ -103,6 +99,8 @@ public class MainActivity extends ActionBarActivity {
 		tempArray = new String[] {"A","B","C","D","E","F","G","H","I","A","B","C","D","E","F","G","H","I"};
 		randomize(tempArray, buttonArray);
 		
+		timeStart = SystemClock.uptimeMillis();
+		timeHandle.postDelayed(timer, 0);
 		
 		new Thread(new Runnable() {
 			//if two buttons have been clicked this code will compare the words in each
@@ -196,6 +194,8 @@ public class MainActivity extends ActionBarActivity {
 						currentMatches = 0;
 						//Game is over
 						handler.post(new buildDialog());
+						timeSwapBuff += timeInMillisec;
+						timeHandle.removeCallbacks(timer);
 						//wait till program exits or restarts
 						while (doRestart == false) {
 						}
@@ -212,6 +212,9 @@ public class MainActivity extends ActionBarActivity {
 							
 						}
 						randomize(tempArray, buttonArray);
+						timeSwapBuff = 0L;
+						timeStart = SystemClock.uptimeMillis();
+						timeHandle.postDelayed(timer, 0);
 						
 					}
 				}
@@ -365,5 +368,21 @@ public class MainActivity extends ActionBarActivity {
 		}
 		
 	}
+	
+	private Runnable timer = new Runnable() {
+
+		@Override
+		public void run() {
+			timeInMillisec = SystemClock.uptimeMillis() - timeStart;
+			timeUpdate = timeSwapBuff + timeInMillisec;
+			int secs = (int) (timeUpdate / 1000);
+			int mins = secs / 60;
+			secs = secs % 60;
+			//Log.d("Timer", "" + mins + ":" + secs);
+			timeView.setText("" + mins + ":" + String.format("%02d", secs));
+			timeHandle.postDelayed(this, 0);
+		}
+		
+	};
 	
 }

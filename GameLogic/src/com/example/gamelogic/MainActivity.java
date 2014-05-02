@@ -53,6 +53,10 @@ public class MainActivity extends ActionBarActivity {
 	long timeSwapBuff = 0L;
 	private TextView timeView;	
 	private Handler timeHandle;
+	int timeBonus = 600;
+	static int finalScore = 0;
+	int mCount = 0;
+	int sCount = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -189,17 +193,41 @@ public class MainActivity extends ActionBarActivity {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					Log.d("Win Conditions", currentMatches + " : " + totalMatchesRequired);
+					//Log.d("Win Conditions", currentMatches + " : " + totalMatchesRequired);
 					if (currentMatches == totalMatchesRequired) {
 						currentMatches = 0;
+						
+						String finalTime = (String) timeView.getText();
+						int split = finalTime.indexOf(':');
+						String min = finalTime.substring(0, split);
+						String sec = finalTime.substring(split+1);
+						int minConvert = Integer.parseInt(min);
+						if (sec.startsWith("0")) {
+							sec = sec.substring(1);
+						}
+						int secConvert = Integer.parseInt(sec);
+						int secTotal = (60 * minConvert) + secConvert;
+						Log.d("Score", "Seconds : " + secTotal);
+						timeBonus = timeBonus - secTotal;
+						Log.d("Score", "Time Bonus :" + timeBonus);
+						
+						int movesBonus = 3000;
+						int moveDif = movesTotal - totalMatchesRequired;
+						movesBonus = movesBonus - (10 * moveDif);
+						Log.d("Score", "Moves Bonus : " + movesBonus);
+						finalScore = movesBonus + timeBonus;
+						
 						//Game is over
 						handler.post(new buildDialog());
 						timeSwapBuff += timeInMillisec;
 						timeHandle.removeCallbacks(timer);
+						
+						
+						
 						//wait till program exits or restarts
 						while (doRestart == false) {
 						}
-
+						doRestart = false;
 						for (int i = 0; i < buttonArray.length; i++) {
 							buttonArray[i].post(new clearText(i, buttonArray));
 							buttonArray[i].post(new clearTitle(i, buttonArray));
@@ -267,7 +295,7 @@ public class MainActivity extends ActionBarActivity {
 		@Override
 		public void run() {
 			dialog.setContentView(R.layout.winscreen);
-			dialog.setTitle("Congratulations!");
+			dialog.setTitle("Final Score = " + finalScore);
 			
 			
 			exit = (Button) dialog.findViewById(R.id.exit);

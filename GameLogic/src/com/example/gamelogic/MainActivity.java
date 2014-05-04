@@ -96,7 +96,39 @@ public class MainActivity extends ActionBarActivity {
 										 {true, true},{true, true},{true, true}
 										};
 
-		tempArray = new String[] {"A","B","C","D","E","F","G","H","I","A","B","C","D","E","F","G","H","I"};
+		//tempArray = new String[] {"A","B","C","D","E","F","G","H","I","A","B","C","D","E","F","G","H","I"};
+		
+		String newWords = "";
+
+		new Thread(new Runnable() {
+			public void run()
+			{
+				Socket socket;
+				DataOutputStream outStream;
+				DataInputStream inStream;
+				
+				try {
+					socket = new Socket("sslab24.cs.purdue.edu", 5000);
+					outStream = new DataOutputStream(socket.getOutputStream());
+					inStream =  new DataInputStream(socket.getInputStream());
+
+					outStream.writeUTF("GET-WORDS");
+
+					newWords = inStream.readUTF();
+				}
+				catch(Exception e)
+				{
+					Log.d(null, e.toString());
+				}
+			}
+		}).start();
+
+		String [] args = str.split("\\|");
+		for(int i = 0; i < 9; i++)
+		{
+			tempArray[i] = args[i];
+		}
+
 		randomize(tempArray, buttonArray);
 		
 		timeStart = SystemClock.uptimeMillis();

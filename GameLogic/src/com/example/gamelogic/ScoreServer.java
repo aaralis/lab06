@@ -158,19 +158,50 @@ class ThreadedHandler implements Runnable
       printScores(0);
    }
 
-   void getWord(int index)
+   void getWords()
    {
    	Connection conn = null;
 	try
 	{
 		conn = getConnection();
-		Statement stat = conn.createStatement();
-
-		ResultSet result = stat.executeQuery("SELECT word FROM dictionary WHERE id = " + index);
+        	Statement stat1 = conn.createStatement();
+	
+		ResultSet result = stat1.executeQuery("SELECT MAX(id) FROM score");
 		result.next();
 
-		if(result.getString(1) == null)
+		int maxVal = 0;
 
+		if(result.getString(1) == null)
+			maxVal = 1;
+		else
+			maxVal = Integer.parseInt(result.getString(1)) + 1;
+	
+		result.close();
+		
+
+		Random random = new Random();
+
+		String output = "";
+		
+		for(int i = 0; i < 9; i++)
+		{
+			Statement stat = conn.createStatement();
+			int r = random.nextInt(maxVal);
+			
+			ResultSet result1 = stat.executeQuery("SELECT word FROM dictionary WHERE id = " + r);
+			result1.next();
+
+			output += result.getString(1) + "|";
+		}
+
+
+		DataOutputStream dos = new DataOutputStream(incoming.getOutputStream());
+	
+		dos.writeUTF(output);
+		System.out.println(output);
+
+		dos.close();
+		result.close();
 	}
 	catch(Exception e)
 	{
@@ -291,6 +322,9 @@ class ThreadedHandler implements Runnable
 		}
 		else if (command.equals("PRINT-SCORES")) {
 			printScores(0);
+		}
+		else if (command.equals("GET-WORDS")) {
+			getWords();
 		}
 		
 	}

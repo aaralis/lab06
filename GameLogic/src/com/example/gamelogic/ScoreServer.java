@@ -1,4 +1,3 @@
-package com.example.gamelogic;
 
 import java.io.*;
 import java.net.*;
@@ -29,15 +28,46 @@ public class ScoreServer
          printUsage();
          int i = 1;
          ServerSocket s = new ServerSocket(port);
+	 BufferedReader buffRead = new BufferedReader(new InputStreamReader(System.in));
+	 String input = "";
+	 DataInputStream inStream = null;
+
 	 while (true)
          {  
             Socket incoming = s.accept();
-            System.out.println("Spawning " + i);
-            Runnable r = new ThreadedHandler(incoming);
+	    inStream = new DataInputStream(incoming.getInputStream());
+	
+	    while((input = inStream.readUTF()) != null)
+	    {
+	    	//System.out.println(input);
+	    	ThreadedHandler th = new ThreadedHandler(incoming);
+		Thread t2 = new Thread(th);
+		t2.start();
+	    	th.handleRequest(input);
+		break;
+	    }
+
+            //System.out.println("Spawning " + i);
+            /*Runnable r = new ThreadedHandler(incoming);
             Thread t = new Thread(r);
             t.start();
+		*/
+	    //BufferedReader buffRead = new BufferedReader(new InputStreamReader(System.in));
+	    //String input = "";
+	    //while((input = buffRead.readLine()) != null)
+	    //{
+	    /*if((input = buffRead.readLine()) != null)
+	    {
+	    	System.out.println(input);
+	    	ThreadedHandler th = new ThreadedHandler();
+		Thread t2 = new Thread(th);
+		t2.start();
+	    	th.handleRequest(input);
+	    }*/
+	    //}
             i++;
          }
+      	
       }
       catch (IOException e)
       {  
@@ -87,44 +117,82 @@ class ThreadedHandler implements Runnable
       Connection conn=null;
       try
       {
-			conn = getConnection();
-		        Statement stat1 = conn.createStatement();
-			
-			ResultSet result = stat1.executeQuery("SELECT MAX(id) FROM score");
-			result.next();
-			int maxVal = Integer.parseInt(result.getString(1)) + 1;
-			
-			result.close();
-			
-			Statement stat2 = conn.createStatement();
-			int value = stat2.executeUpdate("INSERT INTO score "
-					+ "VALUES (" 
-					+ maxVal + ", '" 
-					+ name + "', " 
-					+ score + ", " 
-					+ time + ")");
-			
-			System.out.println("Name: " + name + ", Score: " + score + ", Time: " + time + " should be inserted");
+	conn = getConnection();
+        Statement stat1 = conn.createStatement();
+	
+	ResultSet result = stat1.executeQuery("SELECT MAX(id) FROM score");
+	result.next();
+
+	int maxVal = 0;
+
+	if(result.getString(1) == null)
+		maxVal = 1;
+	else
+		maxVal = Integer.parseInt(result.getString(1)) + 1;
+	
+	result.close();
+	
+	Statement stat2 = conn.createStatement();
+	int value = stat2.executeUpdate("INSERT INTO score "
+			+ "VALUES (" 
+			+ maxVal + ", '" 
+			+ name + "', " 
+			+ score + ", " 
+			+ time + ")");
+	
+	System.out.println("Name: " + name + ", Score: " + score + ", Time: " + time + " should be inserted");
       }
       catch (Exception e) {
       	System.out.println("Something broke");
-      	System.out.println(e.toString());
+	System.out.println(e.toString());
       }
       finally
       {
-		try {
-	         if (conn!=null) conn.close();
-		}
-		catch (Exception e) {
-		}
+	try {
+         if (conn!=null) conn.close();
+	}
+	catch (Exception e) {
+	}
       }
 
       printScores(0);
    }
 
+   void getWord(int index)
+   {
+   	Connection conn = null;
+	try
+	{
+		conn = getConnection();
+		Statement stat = conn.createStatement();
+
+		ResultSet result = stat.executeQuery("SELECT word FROM dictionary WHERE id = " + index);
+		result.next();
+
+		if(result.getString(1) == null)
+
+	}
+	catch(Exception e)
+	{
+		//System.out.println(e.toString());
+	}
+	finally
+	{
+		try
+		{
+			if(conn != null)
+				conn.close();
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+   }
+
    void printScores(int time) {
 
-      Connection conn=null;
+      Connection conn = null;
       try
       {
 	conn = getConnection();
@@ -140,23 +208,33 @@ class ThreadedHandler implements Runnable
 	else
 	{
 		result = stat.executeQuery("SELECT name, moves, time FROM score "
-				+ "ORDER BY moves ASC LIMIT 10");
+				+ "ORDER BY moves DESC LIMIT 10");
 	}
 			
 	int counter = 1;
+	String output = "";
 	while(result.next())
 	{
-		
-		System.out.print(counter + ": ");
+		/*System.out.print(counter + ": ");
 		System.out.print(result.getString(1) + "|");
 		System.out.print(result.getString(2) + "|");
 		System.out.print(result.getString(3));
 		//System.out.print(result.getString(4));
 		System.out.println("");
+		*/
+
+		//output += String.format("%3d. %-25s\n| %-5s\n|", counter, result.getString(1), result.getString(2));
+		output += String.format("%3d. %-25s %5s\n", counter, result.getString(1), result.getString(2));
 
 		counter++;
 	}
+	
+	DataOutputStream dos = new DataOutputStream(incoming.getOutputStream());
+	
+	dos.writeUTF(output);
+	System.out.println(output);
 
+	dos.close();
 	result.close();
       }
       catch (Exception e) {
@@ -172,22 +250,22 @@ class ThreadedHandler implements Runnable
       }
    }   
 
-   void handleRequest( InputStream inStream, OutputStream outStream) {
-        Scanner in = new Scanner(inStream);         
+   void handleRequest(String str/* InputStream inStream, OutputStream outStream*/) {
+        /*Scanner in = new Scanner(inStream);         
         PrintWriter out = new PrintWriter(outStream, 
-                                      true /* autoFlush */);
+                                      true);
 
 	// Get parameters of the call
 	String request = in.nextLine();
 
 	System.out.println("Request="+request);
 
-	String requestSyntax = "Syntax: COMMAND|NAME|SCORE|TIME";
+	String requestSyntax = "Syntax: COMMAND|NAME|SCORE|TIME";*/
 
 	try {
 		// Get arguments.
 		// The format is COMMAND|USER|PASSWORD|OTHER|ARGS...
-		String [] args = request.split("\\|");
+		String [] args = str.split("\\|");
 
 		// Print arguments
 		for (int i = 0; i < args.length; i++) {
@@ -217,11 +295,11 @@ class ThreadedHandler implements Runnable
 		
 	}
 	catch (Exception e) {		
-		System.out.println(requestSyntax);
-		out.println(requestSyntax);
+		//System.out.println(requestSyntax);
+		//out.println(requestSyntax);
 
 		System.out.println(e.toString());
-		out.println(e.toString());
+		//out.println(e.toString());
 	}
    }
 
@@ -230,21 +308,21 @@ class ThreadedHandler implements Runnable
       {  
          try
          {
-            InputStream inStream = incoming.getInputStream();
-            OutputStream outStream = incoming.getOutputStream();
-	    handleRequest(inStream, outStream);
+            //InputStream inStream = incoming.getInputStream();
+            //OutputStream outStream = incoming.getOutputStream();
+	    //handleRequest(inStream, outStream);
 
          }
-      	 catch (IOException e)
+      	 catch (Exception e)
          {  
             e.printStackTrace();
          }
          finally
          {
-            incoming.close();
+            //incoming.close();
          }
       }
-      catch (IOException e)
+      catch (Exception e)
       {  
          e.printStackTrace();
       }

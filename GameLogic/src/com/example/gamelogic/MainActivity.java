@@ -1,34 +1,28 @@
 package com.example.gamelogic;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Random;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 	
@@ -57,6 +51,8 @@ public class MainActivity extends ActionBarActivity {
 	static int finalScore = 0;
 	int mCount = 0;
 	int sCount = 0;
+	private static String playerName = "";
+	private static String serverOut = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -217,10 +213,14 @@ public class MainActivity extends ActionBarActivity {
 						Log.d("Score", "Moves Bonus : " + movesBonus);
 						finalScore = movesBonus + timeBonus;
 						
+						handler.post(new enterName());
+						
+						/* moved to be after name screen
 						//Game is over
 						handler.post(new buildDialog());
 						timeSwapBuff += timeInMillisec;
 						timeHandle.removeCallbacks(timer);
+						*/
 						
 						
 						
@@ -286,16 +286,56 @@ public class MainActivity extends ActionBarActivity {
 			}
 		} while (j < buttonArray.length);
 	}
+	
+	//enter name for highscore
+	private class enterName implements Runnable {
+		
+		Button ok;
+		
+		EditText userName = (EditText)dialog.findViewById(R.id.userName);
+		
+		@Override
+		public void run() {
+			dialog.setContentView(R.layout.namescreen);
+			dialog.setTitle("Enter Name:");
+			
+			timeSwapBuff += timeInMillisec;
+			timeHandle.removeCallbacks(timer);
+			
+			ok = (Button) dialog.findViewById(R.id.ok);
+			ok.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					//Game is over
+					playerName = ((EditText)((View) view.getParent()).findViewById(R.id.userName)).getText().toString();
+					Log.d(null, playerName);
+					handler.post(new buildDialog());
+					/*timeSwapBuff += timeInMillisec;
+					timeHandle.removeCallbacks(timer);*/
+				}
+			
+			});
+			
+			dialog.show();
+		}
+	}
 
 	//creates win screen dialog
 	private static class buildDialog implements Runnable {
 		
 		Button exit;
 		Button restart;
+		
+		TextView nameScores, highScores;
+		
 		@Override
 		public void run() {
 			dialog.setContentView(R.layout.winscreen);
 			dialog.setTitle("Final Score = " + finalScore);
+			
+			 nameScores = (TextView)dialog.findViewById(R.id.nameScores);
+			 highScores = (TextView)dialog.findViewById(R.id.highScores);
 			
 			
 			exit = (Button) dialog.findViewById(R.id.exit);
@@ -315,12 +355,90 @@ public class MainActivity extends ActionBarActivity {
 					doRestart = true;
 					dialog.cancel();
 				}
-				
+
 			});
+			
+			//ProcessBuilder pb = new ProcessBuilder("connect.sh");
+			
+			new Thread(new Runnable() {
+				public void run()
+				{
+					Socket socket;
+					DataOutputStream outStream;
+					DataInputStream inStream;
+					
+					try
+					{
+						//Process p = Runtime.getRuntime().exec("PRINT-SCORES");
+						
+						//pb.start();
+						/*
+						SSHClient ssh = new SSHClient();
+						ssh.loadKnownHosts();
+						ssh.connect("sslab01.cs.purdue.edu");
+						ssh.authPublicKey("zlawson");
+						Session session = ssh.startSession();
+						Command cmd = session.exec("echo \"PRINT-SCORES\" | telnet sslab24.cs.purdue.edu 5000");
+						System.out.println(cmd.getOutputAsString());
+						session.close();
+						ssh.disconnect();
+						*/
+						
+						socket = new Socket("sslab24.cs.purdue.edu", 5000);
+						outStream = new DataOutputStream(socket.getOutputStream());
+						inStream =  new DataInputStream(socket.getInputStream());
+						
+						//outStream.writeUTF("echo \"PRINT-SCORES\" | telnet sslab24.cs.purdue.edu 5000");
+						outStream.writeUTF("INSERT-SCORE|" + playerName + "|" + finalScore + "|10");
+						
+						/*while((serverOut = inStream.readUTF()) != null)
+						{
+							
+						}*/
+						
+						serverOut = String.format("%3s %-25s %-5s\n", "#", "Name", "Score");
+						serverOut += inStream.readUTF();
+						
+						/*String[] splitString = serverOut.split("\\|");
+						String names = String.format("%3s %-25s\n", "#", "Name");
+						String scores = String.format("%-5s\n", "Score");
+						
+						for(int i = 0; i < splitString.length; i++)
+						{
+							if(i % 2 == 0)
+							{
+								names += splitString[i];
+							}
+							else
+							{
+								scores += splitString[i];
+							}
+						}*/
+						
+						
+						
+						/*Log.d("Name", names);
+						Log.d("Score", scores);
+						nameScores.setText(names);
+						highScores.setText(scores);*/
+						nameScores.setText(serverOut);
+						
+						//outStream.close();
+						//inStream.close();
+						//socket.close();
+					}
+					catch(Exception e)
+					{
+						Log.d(null, e.toString());
+					}
+				}
+			}).start();
+			//nameScores.setText();
+			
 			dialog.show();
 		}
-		
 	}
+
 	//runnable to update the number of moves tally
 	private static class changeMoves implements Runnable {
 		private final TextView tv;

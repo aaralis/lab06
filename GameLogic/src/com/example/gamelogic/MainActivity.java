@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
 	int sCount = 0;
 	private static String playerName = "";
 	private static String serverOut = "";
+	private static String newWords = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +99,6 @@ public class MainActivity extends ActionBarActivity {
 
 		//tempArray = new String[] {"A","B","C","D","E","F","G","H","I","A","B","C","D","E","F","G","H","I"};
 		
-		String newWords = "";
-
 		new Thread(new Runnable() {
 			public void run()
 			{
@@ -115,22 +114,37 @@ public class MainActivity extends ActionBarActivity {
 					outStream.writeUTF("GET-WORDS");
 
 					newWords = inStream.readUTF();
+					Log.d(null, newWords);
+					
+					newWords += newWords;
+					Log.d(null, newWords);
 				}
 				catch(Exception e)
 				{
 					Log.d(null, e.toString());
 				}
+				
+				String [] args = newWords.split("\\|");
+				
+				tempArray = new String[18];
+				
+				try
+				{
+					for(int i = 0; i < 18; i++)
+					{
+						Log.d(null, "args[i] = " + args[i]);
+						tempArray[i] = args[i];
+					}
+				}
+				catch(Exception e)
+				{
+					Log.d(null, e.toString());
+				}
+				
+				randomize(tempArray, buttonArray);
 			}
 		}).start();
 
-		String [] args = str.split("\\|");
-		for(int i = 0; i < 9; i++)
-		{
-			tempArray[i] = args[i];
-		}
-
-		randomize(tempArray, buttonArray);
-		
 		timeStart = SystemClock.uptimeMillis();
 		timeHandle.postDelayed(timer, 0);
 		

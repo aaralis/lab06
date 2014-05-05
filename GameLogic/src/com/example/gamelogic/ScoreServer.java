@@ -1,4 +1,3 @@
-package com.example.gamelogic;
 
 import java.io.*;
 import java.net.*;
@@ -167,7 +166,7 @@ class ThreadedHandler implements Runnable
 		conn = getConnection();
         	Statement stat1 = conn.createStatement();
 	
-		ResultSet result = stat1.executeQuery("SELECT MAX(id) FROM score");
+		ResultSet result = stat1.executeQuery("SELECT MAX(id) FROM dictionary");
 		result.next();
 
 		int maxVal = 0;
@@ -176,6 +175,8 @@ class ThreadedHandler implements Runnable
 			maxVal = 1;
 		else
 			maxVal = Integer.parseInt(result.getString(1)) + 1;
+
+		System.out.println("maxVal = " + maxVal);
 	
 		result.close();
 		
@@ -192,7 +193,9 @@ class ThreadedHandler implements Runnable
 			ResultSet result1 = stat.executeQuery("SELECT word FROM dictionary WHERE id = " + r);
 			result1.next();
 
-			output += result.getString(1) + "|";
+			output += result1.getString(1) + "|";
+
+			result1.close();
 		}
 
 
@@ -206,7 +209,7 @@ class ThreadedHandler implements Runnable
 	}
 	catch(Exception e)
 	{
-		//System.out.println(e.toString());
+		System.out.println(e.toString());
 	}
 	finally
 	{
@@ -217,7 +220,7 @@ class ThreadedHandler implements Runnable
 		}
 		catch(Exception e)
 		{
-			
+			System.out.println(e.toString());
 		}
 	}
    }

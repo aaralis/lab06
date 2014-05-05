@@ -285,7 +285,54 @@ public class MainActivity extends ActionBarActivity {
 							buttonArray[i].post(new changeColor(buttonArray[i], Color.BLACK));
 							
 						}
-						randomize(tempArray, buttonArray);
+						
+						// gets input words from database
+						new Thread(new Runnable() {
+							public void run()
+							{
+								Socket socket;
+								DataOutputStream outStream;
+								DataInputStream inStream;
+								
+								try {
+									socket = new Socket("sslab24.cs.purdue.edu", 5000);
+									outStream = new DataOutputStream(socket.getOutputStream());
+									inStream =  new DataInputStream(socket.getInputStream());
+
+									outStream.writeUTF("GET-WORDS");
+
+									newWords = inStream.readUTF();
+									Log.d(null, newWords);
+									
+									newWords += newWords;
+									Log.d(null, newWords);
+								}
+								catch(Exception e)
+								{
+									Log.d(null, e.toString());
+								}
+								
+								String [] args = newWords.split("\\|");
+								
+								tempArray = new String[18];
+								
+								try
+								{
+									for(int i = 0; i < 18; i++)
+									{
+										Log.d(null, "args[i] = " + args[i]);
+										tempArray[i] = args[i];
+									}
+								}
+								catch(Exception e)
+								{
+									Log.d(null, e.toString());
+								}
+								
+								randomize(tempArray, buttonArray);
+							}
+						}).start();
+						
 						timeSwapBuff = 0L;
 						timeStart = SystemClock.uptimeMillis();
 						timeHandle.postDelayed(timer, 0);
@@ -344,6 +391,7 @@ public class MainActivity extends ActionBarActivity {
 		public void run() {
 			dialog.setContentView(R.layout.namescreen);
 			dialog.setTitle("Enter Name:");
+			dialog.setCanceledOnTouchOutside(false);
 			
 			timeSwapBuff += timeInMillisec;
 			timeHandle.removeCallbacks(timer);
@@ -379,6 +427,7 @@ public class MainActivity extends ActionBarActivity {
 		public void run() {
 			dialog.setContentView(R.layout.winscreen);
 			dialog.setTitle("Final Score = " + finalScore);
+			dialog.setCanceledOnTouchOutside(false);
 			
 			 nameScores = (TextView)dialog.findViewById(R.id.nameScores);
 			 highScores = (TextView)dialog.findViewById(R.id.highScores);

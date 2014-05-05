@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal">
@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
+            android:layout_weight="1"
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
            
@@ -54,21 +55,22 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight=".25"
         android:orientation="horizontal" >
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button11"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button12"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button13"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
@@ -78,23 +80,24 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight=".25"
         android:orientation="horizontal" >
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button21"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button22"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button23"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
@@ -104,23 +107,24 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight=".25"
         android:orientation="horizontal" >
      
         <com.example.gamelogic.CustomButton
             android:id="@+id/button31"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button32"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button33"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
@@ -130,21 +134,22 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight=".25"
         android:orientation="horizontal" >
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button41"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button42"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button43"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
@@ -154,21 +159,22 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight=".25"
         android:orientation="horizontal" >
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button51"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button52"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button53"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         
@@ -178,21 +184,22 @@
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight=".25"
         android:orientation="horizontal" >
         
         <com.example.gamelogic.CustomButton
             android:id="@+id/button61"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button62"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <com.example.gamelogic.CustomButton
             android:id="@+id/button63"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         

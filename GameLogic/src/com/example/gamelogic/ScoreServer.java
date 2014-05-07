@@ -108,7 +108,7 @@ class ThreadedHandler implements Runnable
 
       //return DriverManager.getConnection( url, username, password);
      //return DriverManager.getConnection( "jdbc:mysql://sslab01.cs.purdue.edu:3456/Lab06", "root", "lab06");
-      return DriverManager.getConnection( "jdbc:mysql://127.0.0.1:3456/Lab06", "root", "lab06");
+      return DriverManager.getConnection( "jdbc:mysql://sslab24.cs.purdue.edu:3456/Lab06", "root", "lab06");
    }
 
 

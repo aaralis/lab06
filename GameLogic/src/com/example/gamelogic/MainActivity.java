@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity {
 				DataInputStream inStream;
 				
 				try {
-					socket = new Socket("sslab24.cs.purdue.edu", 5000);
+					socket = new Socket("sac11.cs.purdue.edu", 5000);
 					outStream = new DataOutputStream(socket.getOutputStream());
 					inStream =  new DataInputStream(socket.getInputStream());
 
@@ -295,7 +295,7 @@ public class MainActivity extends ActionBarActivity {
 								DataInputStream inStream;
 								
 								try {
-									socket = new Socket("sslab24.cs.purdue.edu", 5000);
+									socket = new Socket("sac11.cs.purdue.edu", 5000);
 									outStream = new DataOutputStream(socket.getOutputStream());
 									inStream =  new DataInputStream(socket.getInputStream());
 
@@ -479,7 +479,7 @@ public class MainActivity extends ActionBarActivity {
 						ssh.disconnect();
 						*/
 						
-						socket = new Socket("sslab24.cs.purdue.edu", 5000);
+						socket = new Socket("sac11.cs.purdue.edu", 5000);
 						outStream = new DataOutputStream(socket.getOutputStream());
 						inStream =  new DataInputStream(socket.getInputStream());
 						

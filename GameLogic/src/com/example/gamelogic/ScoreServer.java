@@ -88,7 +88,7 @@ class ThreadedHandler implements Runnable
 
    public static Connection getConnection() throws SQLException, IOException
    {
-      Properties props = new Properties();
+      /*Properties props = new Properties();
       FileInputStream in = new FileInputStream("database.properties");
       props.load(in);
       in.close();
@@ -101,14 +101,14 @@ class ThreadedHandler implements Runnable
 
       System.out.println("url="+url+" user="+username+" password="+password);
  
-      /*MysqlDataSource dataSource = new MysqlDataSource();
+      MysqlDataSource dataSource = new MysqlDataSource();
       dataSource.setUser(username);
       dataSource.setPassword(password);
       dataSource.setServerName(url);*/
 
       //return DriverManager.getConnection( url, username, password);
      //return DriverManager.getConnection( "jdbc:mysql://sslab01.cs.purdue.edu:3456/Lab06", "root", "lab06");
-      return DriverManager.getConnection( "jdbc:mysql://sslab24.cs.purdue.edu:3456/Lab06", "root", "lab06");
+      return DriverManager.getConnection( "jdbc:mysql://127.0.0.1:11111/pets", "root", "skunkskunk2");
    }
 
 

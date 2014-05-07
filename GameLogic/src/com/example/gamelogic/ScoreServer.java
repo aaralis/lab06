@@ -1,4 +1,4 @@
-package com.example.gamelogic;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -193,6 +193,13 @@ class ThreadedHandler implements Runnable
 			ResultSet result1 = stat.executeQuery("SELECT word FROM dictionary WHERE id = " + r);
 			result1.next();
 
+			if(result1.getString(1).length() > 10)
+			{
+				i--;
+				result1.close();
+				continue;
+			}
+
 			output += result1.getString(1) + "|";
 
 			result1.close();
@@ -259,7 +266,7 @@ class ThreadedHandler implements Runnable
 		*/
 
 		//output += String.format("%3d. %-25s\n| %-5s\n|", counter, result.getString(1), result.getString(2));
-		output += String.format("%3d. %-25s %5s\n", counter, result.getString(1), result.getString(2));
+		output += String.format("%3d. %-15s %5s\n", counter, result.getString(1), result.getString(2));
 
 		counter++;
 	}

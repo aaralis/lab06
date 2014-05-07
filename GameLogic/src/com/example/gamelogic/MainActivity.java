@@ -2,7 +2,6 @@ package com.example.gamelogic;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.Socket;
 import java.util.Random;
 
@@ -19,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -402,6 +402,7 @@ public class MainActivity extends ActionBarActivity {
 				@Override
 				public void onClick(View view) {
 					//Game is over
+					getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 					playerName = ((EditText)((View) view.getParent()).findViewById(R.id.userName)).getText().toString();
 					Log.d(null, playerName);
 					handler.post(new buildDialog());
@@ -429,9 +430,8 @@ public class MainActivity extends ActionBarActivity {
 			dialog.setTitle("Final Score = " + finalScore);
 			dialog.setCanceledOnTouchOutside(false);
 			
-			 nameScores = (TextView)dialog.findViewById(R.id.nameScores);
-			 highScores = (TextView)dialog.findViewById(R.id.highScores);
-			
+			nameScores = (TextView)dialog.findViewById(R.id.nameScores);
+			highScores = (TextView)dialog.findViewById(R.id.highScores);
 			
 			exit = (Button) dialog.findViewById(R.id.exit);
 			exit.setOnClickListener(new OnClickListener() {
@@ -491,7 +491,7 @@ public class MainActivity extends ActionBarActivity {
 							
 						}*/
 						
-						serverOut = String.format("%3s %-25s %-5s\n", "#", "Name", "Score");
+						serverOut = String.format("%3s %-17s %5s\n", "#", " Name", "Score");
 						serverOut += inStream.readUTF();
 						
 						/*String[] splitString = serverOut.split("\\|");
